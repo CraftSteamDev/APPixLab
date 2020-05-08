@@ -613,33 +613,16 @@ public class SimplePicture implements DigitalPicture
  public void writeOrFail(String fileName) throws IOException
  {
    String extension = this.extension; // the default is current
-   
-   // create the file object
-   File file = new File(fileName);
-   File fileLoc = file.getParentFile(); // directory name
-   
-   // if there is no parent directory use the current media dir
-   if (fileLoc == null)
-   {
-     fileName = FileChooser.getMediaPath(fileName);
-     file = new File(fileName);
-     fileLoc = file.getParentFile(); 
-   }
-   
-   // check that you can write to the directory 
-   if (!fileLoc.canWrite()) {
-        throw new IOException(fileName +
-        " could not be opened. Check to see if you can write to the directory.");
-   }
+     File saved = new File("./saved");
+     saved.mkdir();
    
    // get the extension
    int posDot = fileName.indexOf('.');
    if (posDot >= 0)
        extension = fileName.substring(posDot + 1);
-   
+   File file = new File(saved, fileName);
    // write the contents of the buffered image to the file
    ImageIO.write(bufferedImage, extension, file);
-     
  }
 
  /**
